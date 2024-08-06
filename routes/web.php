@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Response;
 
 class Task
 {
@@ -55,13 +56,23 @@ $tasks = [
     ),
 ];
 
-Route::get('/', function () use ($tasks) {
-    return view('index', ['tasks' => $tasks]);
-})->name('task.index');
+Route::get('/', function () {
+    return redirect()->route('tasks.index');
+});
 
-Route::get('{id}', function ($id) {
-    return 'One single task';
-})->name('tasks.show');
+Route::get('/tasks', function () use ($tasks) {
+
+    return view('index', ['tasks' => $tasks]);
+})->name('tasks.index');
+
+Route::get('/tasks/{id}', function ($id) use ($tasks) {
+
+    $task = collect($tasks)->firstWhere('id', $id);
+    if (!$task) {
+        abort(Response::HTTP_NOT_FOUND);
+    }
+    return view('show', ['task' => $task]);
+})->name('tasks.show',);
 
 //後備路線，當沒有輸入正確網址時導向根目錄
 Route::fallback(function () {
