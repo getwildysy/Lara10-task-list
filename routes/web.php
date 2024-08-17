@@ -96,10 +96,38 @@ Route::post('/tasks', function (Request $request) {
 })->name('tasks.store');
 
 
+Route::put('/tasks/{id}', function ($id, Request $request) {
+    $data = $request->validate(
+        [
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'long_description' => 'nullable',
+        ]
+    );
+    // dd($data);
+    $task = Task::findorFail($id);
+    $task->title = $data['title'];
+    $task->description = $data['description'];
+    $task->long_description = $data['long_description'];
+    $task->save();
+
+    return redirect()->route('tasks.show', ['id' => $task->id])
+        ->with('sucess', '成功更新任務');
+})->name('tasks.update');
+
+
+Route::get('/tasks/{id}/edit', function ($id) {
+    return view('edit', [
+        'task' => Task::findOrFail($id)
+    ]);
+})->name('tasks.edit');
+
+
 Route::get('/tasks/{id}', function ($id) {
-    $task = \App\Models\Task::findOrFail($id);
-    return view('show', ['task' => $task]);
+    return view('show', ['task' => Task::findOrFail($id)]);
 })->name('tasks.show');
+
+
 
 
 

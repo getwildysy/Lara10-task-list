@@ -9,7 +9,7 @@
 <p>{{$task->long_description}}</p>
 @endif
 
-<p>{{$task->created_at}}</p>
-<p>{{$task->updated_at}}</p>
+<p>任務創造於:{{$task->created_at}}</p>
+<p>任務更新於:{{$task->updated_at}}</p>
 
 @endsection
