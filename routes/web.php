@@ -91,7 +91,8 @@ Route::post('/tasks', function (Request $request) {
     $task->long_description = $data['long_description'];
     $task->save();
 
-    return redirect()->route('tasks.show', ['id' => $task->id]);
+    return redirect()->route('tasks.show', ['id' => $task->id])
+        ->with('sucess', '成功新增任務');
 })->name('tasks.store');
 
 
