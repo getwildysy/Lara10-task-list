@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="zh_TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Laravel App - @yield('title')</title>
-@yield('styles')
+    @yield('styles')
 
 </head>
+
 <body>
     <h1>@yield('title')</h1>
-<div>
-    @if(session()->has('sucess'))
-    <div>{{session('sucess')}}</div>
-    @endif
-    @yield('content')
-</div>
+    <div>
+        @if (session()->has('sucess'))
+            <div>{{ session('sucess') }}</div>
+        @endif
+        @yield('content')
+    </div>
 </body>
+
 </html>

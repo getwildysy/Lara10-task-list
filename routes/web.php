@@ -62,9 +62,9 @@ Route::get('/', function () {
     return redirect()->route('tasks.index');
 });
 
+//依最後更新時間排序，如要只列出已完成的，可加->where('completed', true)
 Route::get('/tasks', function () {
-    //依最後更新時間排序，如要只列出已完成的，可加->where('completed', true)
-    $tasks = Task::latest('updated_at')->get();
+    $tasks = Task::latest()->paginate();
     return view('index', ['tasks' => $tasks]);
 })->name('tasks.index');
 
@@ -130,6 +130,11 @@ Route::delete('tasks/{task}', function (Task $task) {
     return redirect()->route('tasks.index')->with('sucess', '任務成功刪除');
 })->name('tasks.destory');
 
+
+Route::put('tasks/{task}}/toggle-complete', function (Task $task) {
+    $task->toggleComplete();
+    return redirect()->back()->with('success', '任務更新成功');
+})->name('tasks.toggle-complete');
 
 
 
