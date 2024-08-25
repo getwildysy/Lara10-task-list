@@ -89,7 +89,7 @@ Route::post('/tasks', function (TaskRequest $request) {
     $task = Task::create($request->validated());
 
     return redirect()->route('tasks.show', ['task' => $task->id])
-        ->with('sucess', '成功新增任務');
+        ->with('success', '成功新增任務');
 })->name('tasks.store');
 
 
@@ -106,7 +106,7 @@ Route::put('/tasks/{task}', function (Task $task, TaskRequest $request) {
     //要直接綁定Model的update，要在mode裡加入Fillable的方法
     $task->update($request->validated());
     return redirect()->route('tasks.show', ['task' => $task->id])
-        ->with('sucess', '成功更新任務');
+        ->with('success', '成功更新任務');
 })->name('tasks.update');
 
 
@@ -127,7 +127,7 @@ Route::get('/tasks/{task}', function (Task $task) {
 Route::delete('tasks/{task}', function (Task $task) {
     $task->delete();
 
-    return redirect()->route('tasks.index')->with('sucess', '任務成功刪除');
+    return redirect()->route('tasks.index')->with('success', '任務成功刪除');
 })->name('tasks.destory');
 
 
