@@ -1,66 +1,104 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel 任務列表 (Lara10-task-list)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+這是一個使用 Laravel 11 建構的簡易任務管理應用程式（To-Do List）。
 
-## About Laravel
+使用者可以建立、讀取、更新和刪除 (CRUD) 任務，並將任務標記為已完成或未完成。
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 專案特色
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   **任務管理:**
+    -   顯示所有任務列表 (分頁)
+    -   查看單一任務詳情
+    -   新增任務
+    -   編輯現有任務
+    -   刪除任務
+    -   切換任務完成狀態
+-   **表單驗證:** 使用 Laravel 的 Form Request (`TaskRequest`) 來驗證輸入資料。
+-   **前端:**
+    -   使用 Tailwind CSS (via CDN) 進行樣式設計。
+    -   使用 Alpine.js (via CDN) 處理簡單的前端互動（例如快閃訊息的顯示）。
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 核心技術棧
 
-## Learning Laravel
+-   **PHP:** ^8.2
+-   **Laravel Framework:** ^11.9
+-   **資料庫:** SQLite (預設)
+-   **前端建置:** Vite
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 安裝與啟動
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+**需求:**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+-   PHP >= 8.2
+-   Composer
+-   Node.js & npm (或 yarn / pnpm)
 
-## Laravel Sponsors
+**步驟:**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1.  **Clone 儲存庫:**
 
-### Premium Partners
+    ```bash
+    git clone [https://github.com/your-username/lara10-task-list.git](https://github.com/your-username/lara10-task-list.git)
+    cd lara10-task-list
+    ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+2.  **安裝後端依賴:**
 
-## Contributing
+    ```bash
+    composer install
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3.  **設定環境變數:**
+    複製範例環境檔，在 Windows 上您可能需要使用 `copy`。
 
-## Code of Conduct
+    ```bash
+    cp .env.example .env
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4.  **產生應用程式金鑰 (APP_KEY):**
 
-## Security Vulnerabilities
+    ```bash
+    php artisan key:generate
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+5.  **設定資料庫:**
+    此專案預設使用 SQLite。`composer.json` 中的腳本會自動建立 `database/database.sqlite` 檔案。
 
-## License
+    -   **手動建立 (如果需要):**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+        ```bash
+        touch database/database.sqlite
+        ```
+
+    -   **執行資料庫遷移 (Migration):**
+        這將會建立 `users`, `tasks`, `cache` 等所有必要的資料表。
+        ```bash
+        php artisan migrate
+        ```
+
+6.  **(可選) 填充測試資料:**
+    這將使用 Factory 建立 10 位使用者和 20 個任務。
+
+    ```bash
+    php artisan db:seed
+    ```
+
+7.  **安裝前端依賴:**
+
+    ```bash
+    npm install
+    ```
+
+8.  **啟動開發伺服器:**
+
+    -   **啟動 Vite (處理前端資源):**
+        ```bash
+        npm run dev
+        ```
+    -   **(另開一個終端機) 啟動 Laravel 伺服器:**
+        ```bash
+        php artisan serve
+        ```
+
+9.  **訪問應用程式:**
+    開啟瀏覽器並訪問 `http://127.0.0.1:8000`
