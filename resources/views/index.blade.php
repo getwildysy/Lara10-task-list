@@ -3,29 +3,43 @@
 @section('title', '任務列表')
 
 @section('content')
-    {{-- 下列link樣式寫在app.index的head裡 --}}
-    <nav class="mb-4">
+    {{-- 將 "新增任務" 連結改為主要按鈕樣式 --}}
+    <nav class="mb-6">
         <div>
-            <a href="{{ route('tasks.create') }} " class="link">新增任務</a>
+            <a href="{{ route('tasks.create') }} " class="btn btn-primary">新增任務</a>
         </div>
     </nav>
 
-    {{-- 使用@Class傳遞一個陣列，動態的為任務完成狀態添加刪除線 --}}
+    {{-- 為每個任務項目添加卡片樣式 --}}
     @forelse ($tasks as $task)
-        <div>
-            <a href="{{ route('tasks.show', ['task' => $task->id]) }}" @class(['line-through font-bold' => $task->completed])>{{ $task->title }}</a>
+        <div class="mb-3 p-4 bg-white rounded-lg shadow-sm border border-gray-200 flex justify-between items-center">
+            {{-- 任務標題 --}}
+            <span class="text-lg">
+                <a href="{{ route('tasks.show', ['task' => $task->id]) }}" @class([
+                    'font-medium text-gray-900 hover:text-indigo-600',
+                    'line-through text-gray-500' => $task->completed,
+                ])>
+                    {{ $task->title }}
+                </a>
+            </span>
+
+            {{-- 任務狀態 (簡易圖示) --}}
+            <span class="text-lg">
+                @if ($task->completed)
+                    <span title="已完成">✅</span>
+                @else
+                    <span title="未完成" class="text-gray-400">...</span>
+                @endif
+            </span>
         </div>
     @empty
-        <div>沒有任務</div>
+        <div class="text-gray-500 text-center">目前沒有任何任務</div>
     @endforelse
 
     {{-- 分頁 --}}
-    <nav class="mt-4">
-        @if ($tasks->count())
+    @if ($tasks->count())
+        <nav class="mt-8">
             {{ $tasks->links() }}
-    </nav>
-    {{-- <div> Showing {{ $tasks->firstItem() }} to {{ $tasks->lastItem() }} of {{ $tasks->total() }} results </div> --}}
+        </nav>
     @endif
-
-
 @endsection

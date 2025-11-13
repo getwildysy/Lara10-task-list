@@ -12,6 +12,8 @@
         @isset($task)
             @method('PUT')
         @endisset
+
+        {{-- 標題 --}}
         <div class="mb-4">
             <label for="title">
                 Title
@@ -23,6 +25,7 @@
             @enderror
         </div>
 
+        {{-- 描述 --}}
         <div class="mb-4">
             <label for="description">Description</label>
             <textarea name="description" id="description" @class(['border-red-500' => $errors->has('description')]) rows="5">{{ $task->description ?? old('description') }}</textarea>
@@ -31,6 +34,7 @@
             @enderror
         </div>
 
+        {{-- 詳細描述 --}}
         <div class="mb-4">
             <label for="long_description">Long Description</label>
             <textarea name="long_description" id="long_description" rows="10">{{ $task->long_description ?? old('long_description') }}</textarea>
@@ -39,15 +43,16 @@
             @enderror
         </div>
 
-        <div class="flex gap-2 items-center ">
-            <button type="submit" class='btn'>
+        {{-- 操作按鈕 --}}
+        <div class="flex gap-3 items-center">
+            <button type="submit" class='btn btn-primary'>
                 @isset($task)
                     更新任務
                 @else
                     新增任務
                 @endisset
             </button>
-            <a href="{{ route('tasks.index') }}" class="btn">回首頁</a>
+            <a href="{{ route('tasks.index') }}" class="btn btn-secondary">回首頁</a>
         </div>
     </form>
 
